@@ -1,9 +1,12 @@
 import string
 import os.path
-from . import fakes
+from datetime import datetime, timedelta
 
 CWD = os.path.dirname(os.path.realpath(__file__))
 
+
+def datetime_to_smartfact_ms_timestamp(dt=datetime.utcnow()):
+    return int(dt.timestamp() * 1e3)
 
 smartfact_data_path = '/home/factwww/smartfact/data'
 
@@ -15,7 +18,7 @@ template_defaults = {
         'relative_camera_temperature': 12.7,
     },
     'status': {
-        'timestamp': fakes.datetime_to_smartfact_ms_timestamp(),
+        'timestamp': datetime_to_smartfact_ms_timestamp(),
         'dim': 'V20r15',
         'dim_control': 'Running',
         'feedback': 'Connecting',
