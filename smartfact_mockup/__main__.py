@@ -25,9 +25,12 @@ def main():
         # checks_module.test_ParkingChecklistFilled,
     ]
 
+    input('Make sure, you are shifter tonight.')
+
     for check in checks:
         check()
 
+    input('Make sure, you reset the original shifter.')
 
 if __name__ == '__main__':
     main()
