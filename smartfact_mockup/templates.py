@@ -6,6 +6,7 @@ CWD = os.path.dirname(os.path.realpath(__file__))
 
 
 def datetime_to_smartfact_ms_timestamp(dt=datetime.utcnow()):
+    dt = dt + timedelta(hours=1)
     return int(dt.timestamp() * 1e3)
 
 smartfact_data_path = '/home/factwww/smartfact/data'
