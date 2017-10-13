@@ -1,7 +1,9 @@
 import string
 import os.path
+from .fakes import datetime_to_smartfact_ms_timestamp
 
 CWD = os.path.dirname(os.path.realpath(__file__))
+
 
 smartfact_data_path = '/home/factwww/smartfact/data'
 
@@ -13,8 +15,9 @@ template_defaults = {
         'relative_camera_temperature': 12.7,
     },
     'status': {
+        'timestamp': datetime_to_smartfact_ms_timestamp(),
         'dim': 'V20r15',
-        'dim_control': 'Idle',
+        'dim_control': 'Running',
         'feedback': 'Connecting',
         'bias_control': 'Disconnected',
         'mcp': 'Idle',
@@ -36,6 +39,7 @@ template_defaults = {
         'az': 0,
     },
     'weather': {
+        'timestamp': datetime_to_smartfact_ms_timestamp(),
         'wind_speed': 10.4,
         'wind_gusts': 11.6,
     },
