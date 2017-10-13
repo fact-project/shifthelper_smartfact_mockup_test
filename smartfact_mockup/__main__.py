@@ -27,11 +27,8 @@ def main():
         # checks_module.test_ParkingChecklistFilled,
     ]
 
-    templates.write_data_file(
-        'status',
-        timestamp=datetime_to_smartfact_ms_timestamp(),
-        dim_control='Running'
-    )
+    templates.write_data_file('status')
+    templates.write_data_file('weather')
 
     input('Make sure, you are shifter tonight.')
 
