@@ -1,0 +1,5 @@
+{timestamp}
+#ffffff	{min_board_rate:.1f}
+#ffffff	{med_board_rate:.1f}
+#ffffff	{avg_board_rate:.1f}
+#ffffff	{max_board_rate:.1f}

@@ -1,0 +1,5 @@
+{timestamp}
+#ffffff	{nominal_output_voltage:0.1f}
+#ffffff	{measured_output_voltage:0.1f}
+#ffffff	{current_limit:.1f}
+#ffffff	{measured_current:.1f}
