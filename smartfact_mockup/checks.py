@@ -11,6 +11,8 @@ def test_SmartFactUpToDate():
         category=CATEGORY_SHIFTER
     '''
     fakes.fake_smartfact_outdated()
+    print()
+    print('test_SmartFactUpToDate')
     return input(
         'verify that SH is calling you, '
         'shows a WARNING message, '
@@ -25,6 +27,8 @@ def test_MAGICWeatherUpToDate():
         category=CATEGORY_SHIFTER
     '''
     fakes.fake_magic_weather_outdated()
+    print()
+    print('test_MAGICWeatherUpToDate')
     return input(
         'verify that SH is calling you, '
         'shows a WARNING message, '
@@ -42,6 +46,8 @@ def test_ShifterOnShift():
     # The nobody on shift test, is not done using
     # the smartfact mockup, but using the shift scheduler.
     raise NotImplementedError('needs shift scheduler DB mockup.')
+    print()
+    print('test_ShifterOnShift')
     return input(
         'verify that SH is calling you, '
         'shows a WARNING message, '
@@ -56,6 +62,8 @@ def test_MainJsStatusCheck():
         category=CATEGORY_SHIFTER
     '''
     fakes.fake_mainjs_not_running()
+    print()
+    print('test_MainJsStatusCheck')
     return input(
         'verify that SH is calling you, '
         'shows a WARNING message, '
@@ -72,6 +80,8 @@ def test_WindSpeedCheck():
     '''
     fakes.fake_high_windspeed()
     fakes.fake_not_parked()
+    print()
+    print('test_WindSpeedCheck')
     return input(
         'verify that SH is calling you, '
         'shows a WARNING message, '
@@ -88,6 +98,8 @@ def test_WindGustCheck():
     '''
     fakes.fake_high_windgusts()
     fakes.fake_not_parked()
+    print()
+    print('test_WindGustCheck')
     return input(
         'verify that SH is calling you, '
         'shows a WARNING message, '
@@ -102,6 +114,8 @@ def test_MedianCurrentCheck():
         category=CATEGORY_SHIFTER
     '''
     fakes.fake_median_current_high()
+    print()
+    print('test_MedianCurrentCheck')
     return input(
         'verify that SH is calling you, '
         'shows a WARNING message, '
@@ -116,6 +130,8 @@ def test_MaximumCurrentCheck():
         category=CATEGORY_SHIFTER
     '''
     fakes.fake_maximum_current_high()
+    print()
+    print('test_MaximumCurrentCheck')
     return input(
         'verify that SH is calling you, '
         'shows a WARNING message, '
@@ -130,6 +146,8 @@ def test_RelativeCameraTemperatureCheck():
         category=CATEGORY_SHIFTER
     '''
     fakes.fake_rel_camera_temperature_high()
+    print()
+    print('test_RelativeCameraTemperatureCheck')
     return input(
         'verify that SH is calling you, '
         'shows a WARNING message, '
@@ -148,6 +166,8 @@ def test_BiasNotOperatingDuringDataRun():
     fakes.fake_data_run()
     fakes.fake_data_taking()
     fakes.fake_bias_not_operating()
+    print()
+    print('test_BiasNotOperatingDuringDataRun')
     return input(
         'verify that SH is calling you, '
         'shows a WARNING message, '
@@ -162,6 +182,8 @@ def test_BiasChannelsInOverCurrent():
         category=CATEGORY_SHIFTER
     '''
     fakes.fake_overcurrent()
+    print()
+    print('test_BiasChannelsInOverCurrent')
     return input(
         'verify that SH is calling you, '
         'shows a WARNING message, '
@@ -176,6 +198,8 @@ def test_BiasVoltageNotAtReference():
         category=CATEGORY_SHIFTER
     '''
     fakes.fake_bias_voltage_not_at_reference()
+    print()
+    print('test_BiasVoltageNotAtReference')
     return input(
         'verify that SH is calling you, '
         'shows a WARNING message, '
@@ -190,6 +214,8 @@ def test_ContainerTooWarm():
         category=CATEGORY_SHIFTER
     '''
     fakes.fake_container_too_warm()
+    print()
+    print('test_ContainerTooWarm')
     return input(
         'verify that SH is calling you, '
         'shows a WARNING message, '
@@ -208,6 +234,8 @@ def test_DriveInErrorDuringDataRun():
     fakes.fake_drive_in_error()
     fakes.fake_data_run()
     fakes.fake_data_taking()
+    print()
+    print('test_DriveInErrorDuringDataRun')
     return input(
         'verify that SH is calling you, '
         'shows a WARNING message, '
@@ -224,6 +252,8 @@ def test_BiasVoltageOnButNotCalibrated():
     '''
     fakes.fake_voltage_on()
     fakes.fake_feedback_not_calibrated()
+    print()
+    print('test_BiasVoltageOnButNotCalibrated')
     return input(
         'verify that SH is calling you, '
         'shows a WARNING message, '
@@ -238,6 +268,8 @@ def test_DIMNetworkNotAvailable():
         category=CATEGORY_SHIFTER
     '''
     fakes.fake_dim_network_down()
+    print()
+    print('test_DIMNetworkNotAvailable')
     return input(
         'verify that SH is calling you, '
         'shows a WARNING message, '
@@ -252,6 +284,13 @@ def test_NoDimCtrlServerAvailable():
         category=CATEGORY_SHIFTER
     '''
     fakes.fake_no_dimctrl_server_available()
+    print()
+    print('test_NoDimCtrlServerAvailable')
+    return input(
+        'verify that SH is calling you, '
+        'shows a WARNING message, '
+        'and sends you a telegram message'
+    )
 
 
 def test_IsUserAwakeBeforeShutdown():
@@ -283,6 +322,12 @@ def test_TriggerRateLowForTenMinutes():
         category=CATEGORY_SHIFTER
     '''
     fakes.fake_trigger_rate_low_for_ten_minutes()
-    for i in tqdm(range(int(timedelta(minutes=0).total_seconds()))):
+    for i in tqdm(range(int(timedelta(minutes=10).total_seconds()))):
         time.sleep(1)
-
+    print()
+    print('test_TriggerRateLowForTenMinutes')
+    return input(
+        'verify that SH is calling you, '
+        'shows a WARNING message, '
+        'and sends you a telegram message'
+    )
