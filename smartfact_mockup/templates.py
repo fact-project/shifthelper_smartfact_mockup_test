@@ -1,6 +1,6 @@
 import string
 import os.path
-from .fakes import datetime_to_smartfact_ms_timestamp
+from . import fakes
 
 CWD = os.path.dirname(os.path.realpath(__file__))
 
@@ -15,7 +15,7 @@ template_defaults = {
         'relative_camera_temperature': 12.7,
     },
     'status': {
-        'timestamp': datetime_to_smartfact_ms_timestamp(),
+        'timestamp': fakes.datetime_to_smartfact_ms_timestamp(),
         'dim': 'V20r15',
         'dim_control': 'Running',
         'feedback': 'Connecting',
