@@ -1,6 +1,5 @@
 from . import checks as checks_module
 from . import templates
-from .fakes import datetime_to_smartfact_ms_timestamp
 
 
 def main():
