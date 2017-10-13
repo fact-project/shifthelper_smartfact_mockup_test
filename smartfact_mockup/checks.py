@@ -4,9 +4,6 @@ from . import fakes
 from tqdm import tqdm
 
 
-input = lambda x: None
-
-
 def test_SmartFactUpToDate():
     '''conditions:
         is_shift_at_the_moment,
