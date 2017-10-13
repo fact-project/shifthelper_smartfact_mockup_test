@@ -4,7 +4,6 @@ import os.path
 CWD = os.path.dirname(os.path.realpath(__file__))
 
 smartfact_data_path = '/home/factwww/smartfact/data'
-smartfact_data_path = '/home/dneise/smartfact_mockup_data'
 
 os.makedirs(smartfact_data_path, exist_ok=True)
 
