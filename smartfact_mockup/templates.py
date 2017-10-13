@@ -15,6 +15,8 @@ os.makedirs(smartfact_data_path, exist_ok=True)
 
 template_defaults = {
     'fact': {
+        'timestamp_1': datetime_to_smartfact_ms_timestamp(),
+        'timestamp_2': datetime_to_smartfact_ms_timestamp(),
         'system_status': 'Idle [single-pe]',
         'relative_camera_temperature': 12.7,
     },
