@@ -1,76 +1,101 @@
-from . import fakes
+from datetime import datetime, timedelta
+from .templates import write_data_file
+from .templates import datetime_to_smartfact_ms_timestamp
 
 
 def test_SmartFactUpToDate():
-    fakes.fake_smartfact_outdated()
+    write_data_file(
+        'fact',
+        timestamp_1=datetime_to_smartfact_ms_timestamp(
+            datetime.utcnow() - timedelta(minutes=11)
+            ),
+        timestamp_2=datetime_to_smartfact_ms_timestamp(
+            datetime.utcnow() - timedelta(minutes=11)
+            ),
+    )
 
 
 def test_MAGICWeatherUpToDate():
-    fakes.fake_magic_weather_outdated()
+    write_data_file(
+        'weather',
+        timestamp=datetime_to_smartfact_ms_timestamp(
+            datetime.utcnow() - timedelta(minutes=11)
+            ),
+    )
 
 
 def test_MainJsStatusCheck():
-    fakes.fake_mainjs_not_running()
+    write_data_file('status', dim_control='Anything')
 
 
 def test_WindSpeedCheck():
-    fakes.fake_high_windspeed()
-    fakes.fake_not_parked()
+    write_data_file('weather', wind_speed=60)
+    write_data_file('pointing', az=10, zd=45)  # not parked
 
 
 def test_WindGustCheck():
-    fakes.fake_high_windgusts()
-    fakes.fake_not_parked()
+    write_data_file('weather', wind_gusts=60)
+    write_data_file('pointing', az=10, zd=45)  # not parked
 
 
 def test_MedianCurrentCheck():
-    fakes.fake_median_current_high()
+    write_data_file('current', calibrated='yes', median_per_sipm=116)
 
 
 def test_MaximumCurrentCheck():
-    fakes.fake_maximum_current_high()
+    write_data_file('current', calibrated='yes', max_per_sipm=170)
 
 
 def test_RelativeCameraTemperatureCheck():
-    fakes.fake_rel_camera_temperature_high()
+    write_data_file('fact', relative_camera_temperature=16.0)
 
 
 def test_BiasNotOperatingDuringDataRun():
-    fakes.fake_data_run()
-    fakes.fake_data_taking()
-    fakes.fake_bias_not_operating()
+    # data taking
+    write_data_file('status', mcp='TakingData')
+    # data run
+    write_data_file('fact', system_status='Foo [data]')
+    # Bias not operating
+    write_data_file('status', bias_control='Disconnected')
 
 
 def test_BiasChannelsInOverCurrent():
-    fakes.fake_overcurrent()
+    write_data_file('status', bias_control='OverCurrent')
 
 
 def test_BiasVoltageNotAtReference():
-    fakes.fake_bias_voltage_not_at_reference()
+    write_data_file('status', bias_control='NotReferenced')
 
 
 def test_ContainerTooWarm():
-    fakes.fake_container_too_warm()
+    write_data_file('temperature', current=43)
 
 
 def test_DriveInErrorDuringDataRun():
-    fakes.fake_drive_in_error()
-    fakes.fake_data_run()
-    fakes.fake_data_taking()
+    # data taking
+    write_data_file('status', mcp='TakingData')
+    # data run
+    write_data_file('fact', system_status='Foo [data]')
+    # Drive in Error
+    write_data_file('status', drive_control='PositioningFailed')
 
 
 def test_BiasVoltageOnButNotCalibrated():
-    fakes.fake_voltage_on()
-    fakes.fake_feedback_not_calibrated()
+    # voltage on
+    write_data_file('voltage', median=4)
+    write_data_file('status', bias_control='VoltageOn')
+
+    # feedback not calibrated
+    write_data_file('status', feedback='Disconnected')
 
 
 def test_DIMNetworkNotAvailable():
-    fakes.fake_dim_network_down()
+    write_data_file('status', dim='Offline')
 
 
 def test_NoDimCtrlServerAvailable():
-    fakes.fake_no_dimctrl_server_available()
+    write_data_file('status', dim_control='Offline')
 
 
 def test_TriggerRateLowForTenMinutes():
-    fakes.fake_trigger_rate_low_for_ten_minutes()
+    write_data_file('trigger', trigger_rate=0)
