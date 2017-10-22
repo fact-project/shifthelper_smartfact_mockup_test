@@ -1,6 +1,4 @@
-from datetime import timedelta
 from . import fakes
-from tqdm import tqdm
 
 
 def test_SmartFactUpToDate():
