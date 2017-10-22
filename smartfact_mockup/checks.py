@@ -1,5 +1,5 @@
 import time
-from datetime import datetime, timedelta
+from datetime import timedelta
 from . import fakes
 from tqdm import tqdm
 
