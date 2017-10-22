@@ -41,6 +41,7 @@ template_defaults = {
         'median_per_sipm': -8.47,
     },
     'pointing': {
+        'timestamp': datetime_to_smartfact_ms_timestamp(),
         'zd': 101,
         'az': 0,
     },
