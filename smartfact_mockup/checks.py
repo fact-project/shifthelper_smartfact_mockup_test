@@ -51,12 +51,14 @@ def test_RelativeCameraTemperatureCheck():
 
 
 def test_BiasNotOperatingDuringDataRun():
-    # data taking
-    write_data_file('status', mcp='TakingData')
     # data run
     write_data_file('fact', system_status='Foo [data]')
     # Bias not operating
-    write_data_file('status', bias_control='Disconnected')
+    write_data_file(
+        'status',
+        bias_control='Disconnected',  # Bias not operating
+        mcp='TakingData',  # is taking data
+    )
 
 
 def test_BiasChannelsInOverCurrent():
@@ -72,12 +74,13 @@ def test_ContainerTooWarm():
 
 
 def test_DriveInErrorDuringDataRun():
-    # data taking
-    write_data_file('status', mcp='TakingData')
     # data run
     write_data_file('fact', system_status='Foo [data]')
-    # Drive in Error
-    write_data_file('status', drive_control='PositioningFailed')
+    write_data_file(
+        'status',
+        drive_control='PositioningFailed',  # Drive in Error
+        mcp='TakingData',  # data taking
+    )
 
 
 def test_BiasVoltageOnButNotCalibrated():
