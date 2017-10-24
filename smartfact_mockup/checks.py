@@ -1,26 +1,19 @@
 from datetime import datetime, timedelta
 from .templates import write_data_file
-from .templates import datetime_to_smartfact_ms_timestamp
 
 
 def test_SmartFactUpToDate():
     write_data_file(
         'fact',
-        timestamp_1=datetime_to_smartfact_ms_timestamp(
-            datetime.utcnow() - timedelta(minutes=11)
-            ),
-        timestamp_2=datetime_to_smartfact_ms_timestamp(
-            datetime.utcnow() - timedelta(minutes=11)
-            ),
+        timestamp_1=datetime.utcnow() - timedelta(minutes=11),
+        timestamp_2=datetime.utcnow() - timedelta(minutes=11),
     )
 
 
 def test_MAGICWeatherUpToDate():
     write_data_file(
         'weather',
-        timestamp=datetime_to_smartfact_ms_timestamp(
-            datetime.utcnow() - timedelta(minutes=11)
-            ),
+        timestamp=datetime.utcnow() - timedelta(minutes=11),
     )
 
 

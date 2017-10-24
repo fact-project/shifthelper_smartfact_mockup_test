@@ -2,26 +2,15 @@ import string
 import os.path
 from datetime import datetime, timedelta
 
-CWD = os.path.dirname(os.path.realpath(__file__))
-
-
-def datetime_to_smartfact_ms_timestamp(dt=datetime.utcnow()):
-    dt = dt + timedelta(hours=1)
-    return int(dt.timestamp() * 1e3)
-
-smartfact_data_path = '/home/factwww/smartfact/data'
-
-os.makedirs(smartfact_data_path, exist_ok=True)
-
 template_defaults = {
     'fact': {
-        'timestamp_1': datetime_to_smartfact_ms_timestamp(),
-        'timestamp_2': datetime_to_smartfact_ms_timestamp(),
+        'timestamp_1': datetime.utcnow(),
+        'timestamp_2': datetime.utcnow(),
         'system_status': 'Idle [single-pe]',
         'relative_camera_temperature': 12.7,
     },
     'status': {
-        'timestamp': datetime_to_smartfact_ms_timestamp(),
+        'timestamp': datetime.utcnow(),
         'dim': 'V20r15',
         'dim_control': 'Running',
         'feedback': 'Connecting',
@@ -30,23 +19,26 @@ template_defaults = {
         'drive_control': 'Locked',
     },
     'voltage': {
+        'timestamp': datetime.utcnow(),
         'median': 0.001
     },
     'temperature': {
+        'timestamp': datetime.utcnow(),
         'current': 19.4,
     },
     'current': {
+        'timestamp': datetime.utcnow(),
         'calibrated': 'yes',
         'max_per_sipm': 3.52,
         'median_per_sipm': -8.47,
     },
     'pointing': {
-        'timestamp': datetime_to_smartfact_ms_timestamp(),
+        'timestamp': datetime.utcnow(),
         'zd': 101,
         'az': 0,
     },
     'weather': {
-        'timestamp': datetime_to_smartfact_ms_timestamp(),
+        'timestamp': datetime.utcnow(),
         'wind_speed': 10.4,
         'wind_gusts': 11.6,
     },
@@ -54,6 +46,7 @@ template_defaults = {
 
 
 def get_template(name):
+    CWD = os.path.dirname(os.path.realpath(__file__))
     path = os.path.join(CWD, 'templates', '{}.data'.format(name))
     return open(path, 'r').read()
 
@@ -67,9 +60,16 @@ def string_field_names(s):
 
 
 def write_data_file(name, **kwargs):
+    smartfact_data_path = '/home/factwww/smartfact/data'
+    os.makedirs(smartfact_data_path, exist_ok=True)
+
     kw = {
         **template_defaults.get(name, {}),
         **kwargs,
+    }
+
+    kw = {
+        key: transform(key, value) for key, value in kw.items()
     }
     tpl = get_template(name)
     sanity_check(name, kw, tpl)
@@ -85,6 +85,17 @@ def write_data_file(name, **kwargs):
         name+'.data')
     with open(out_path, 'w') as out_file:
         out_file.write(mockup_data)
+
+
+def transform(key, value):
+    if 'timestamp' in key:
+        value = datetime_to_smartfact_ms_timestamp(value)
+    return value
+
+
+def datetime_to_smartfact_ms_timestamp(dt=datetime.utcnow()):
+    dt = dt + timedelta(hours=1)
+    return int(dt.timestamp() * 1e3)
 
 
 def sanity_check(name, kwargs, tpl):
