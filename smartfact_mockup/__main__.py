@@ -8,6 +8,7 @@ def doit(arg):
     t = threading.currentThread()
     print("working on %s" % arg.__name__)
     while getattr(t, "do_run", True):
+        print('-'*70)
         arg()
         time.sleep(1)
 
