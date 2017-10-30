@@ -1,6 +1,7 @@
-from datetime import timedelta
-from datetime.datetime import utcnow
+from datetime import datetime, timedelta
 from .templates import write_data_file
+
+utcnow = datetime.utcnow
 
 
 def test_SmartFactUpToDate():
