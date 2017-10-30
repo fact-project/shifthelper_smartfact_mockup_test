@@ -42,6 +42,10 @@ template_defaults = {
         'wind_speed': 10.4,
         'wind_gusts': 11.6,
     },
+    'trigger': {
+        'timestamp': 0,
+        'trigger_rate': 30.4,
+    },
 }
 
 

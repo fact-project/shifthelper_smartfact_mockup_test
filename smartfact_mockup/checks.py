@@ -9,6 +9,7 @@ def all_good():
     write_data_file('current')
     write_data_file('temperature')
     write_data_file('voltage')
+    write_data_file('trigger')
 
 
 def test_SmartFactUpToDate():
