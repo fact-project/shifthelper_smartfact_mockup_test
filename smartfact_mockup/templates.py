@@ -64,12 +64,9 @@ def write_data_file(name, **kwargs):
     os.makedirs(smartfact_data_path, exist_ok=True)
 
     kw = {
-        **template_defaults.get(name, {}),
-        **kwargs,
-    }
-
-    kw = {
-        key: transform(key, value) for key, value in kw.items()
+        key: transform(key, value)
+        for key, value
+        in {**template_defaults[name], **kwargs}.items()
     }
     tpl = get_template(name)
     sanity_check(name, kw, tpl)
@@ -80,9 +77,7 @@ def write_data_file(name, **kwargs):
         print('field_names in template:', string_field_names(tpl))
         print('kw:', kw)
         raise
-    out_path = os.path.join(
-        smartfact_data_path,
-        name+'.data')
+    out_path = os.path.join(smartfact_data_path, name+'.data')
     with open(out_path, 'w') as out_file:
         out_file.write(mockup_data)
 
