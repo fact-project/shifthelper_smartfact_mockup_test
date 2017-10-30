@@ -5,13 +5,13 @@ from pprint import pprint
 
 template_defaults = {
     'fact': {
-        'timestamp_1': datetime.utcnow(),
-        'timestamp_2': datetime.utcnow(),
+        'timestamp_1': 0,
+        'timestamp_2': 0,
         'system_status': 'Idle [single-pe]',
         'relative_camera_temperature': 12.7,
     },
     'status': {
-        'timestamp': datetime.utcnow(),
+        'timestamp': 0,
         'dim': 'V20r15',
         'dim_control': 'Running',
         'feedback': 'Connecting',
@@ -20,26 +20,26 @@ template_defaults = {
         'drive_control': 'Locked',
     },
     'voltage': {
-        'timestamp': datetime.utcnow(),
+        'timestamp': 0,
         'median': 0.001
     },
     'temperature': {
-        'timestamp': datetime.utcnow(),
+        'timestamp': 0,
         'current': 19.4,
     },
     'current': {
-        'timestamp': datetime.utcnow(),
+        'timestamp': 0,
         'calibrated': 'yes',
         'max_per_sipm': 3.52,
         'median_per_sipm': -8.47,
     },
     'pointing': {
-        'timestamp': datetime.utcnow(),
+        'timestamp': 0,
         'zd': 101,
         'az': 0,
     },
     'weather': {
-        'timestamp': datetime.utcnow(),
+        'timestamp': 0,
         'wind_speed': 10.4,
         'wind_gusts': 11.6,
     },
@@ -88,7 +88,8 @@ def write_data_file(name, **kwargs):
 
 def transform(key, value):
     if 'timestamp' in key:
-        value = datetime_to_smartfact_ms_timestamp(value)
+        time = datetime.utcnow() - timedelta(minutes=value)
+        value = datetime_to_smartfact_ms_timestamp(time)
     return value
 
 

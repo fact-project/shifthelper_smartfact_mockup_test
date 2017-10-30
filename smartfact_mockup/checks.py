@@ -1,7 +1,4 @@
-from datetime import datetime, timedelta
 from .templates import write_data_file
-
-utcnow = datetime.utcnow
 
 
 def all_good():
@@ -18,8 +15,8 @@ def test_SmartFactUpToDate():
     all_good()
     write_data_file(
         'fact',
-        timestamp_1=utcnow() - timedelta(minutes=11),
-        timestamp_2=utcnow() - timedelta(minutes=11),
+        timestamp_1=11,
+        timestamp_2=11,
     )
 
 
@@ -27,7 +24,7 @@ def test_MAGICWeatherUpToDate():
     all_good()
     write_data_file(
         'weather',
-        timestamp=utcnow() - timedelta(minutes=11),
+        timestamp=11,
     )
 
 
