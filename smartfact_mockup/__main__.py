@@ -36,10 +36,6 @@ def main():
         # checks_module.test_ParkingChecklistFilled,
     ]
 
-    templates.write_data_file('fact')
-    templates.write_data_file('status')
-    templates.write_data_file('weather')
-
     input('Make sure, you are shifter tonight.')
 
     for check in checks:
