@@ -89,7 +89,6 @@ def transform(key, value):
 
 
 def datetime_to_smartfact_ms_timestamp(dt=datetime.utcnow()):
-    dt = dt + timedelta(hours=1)
     return int(dt.timestamp() * 1e3)
 
 
