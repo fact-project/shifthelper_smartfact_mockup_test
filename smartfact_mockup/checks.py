@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import timedelta
 from datetime.datetime import utcnow
 from .templates import write_data_file
 
