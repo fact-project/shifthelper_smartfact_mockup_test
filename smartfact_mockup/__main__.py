@@ -1,5 +1,15 @@
+import time
+import threading
 from . import checks as checks_module
 from . import templates
+
+
+def doit(arg):
+    t = threading.currentThread()
+    while getattr(t, "do_run", True):
+        print("working on %s" % arg.__name__)
+        arg()
+        time.sleep(1)
 
 
 def main():
@@ -34,8 +44,11 @@ def main():
 
     for check in checks:
         print('executing:', check.__name__)
-        check()
+        t = threading.Thread(target=doit, args=(check,))
+        t.start()
         input('wait for the call...')
+        t.do_run = False
+        t.join()
 
     input('Make sure, you reset the original shifter.')
 
