@@ -33,7 +33,9 @@ def main():
     input('Make sure, you are shifter tonight.')
 
     for check in checks:
+        print('executing:', check.__name__)
         check()
+        input('wait for the call...')
 
     input('Make sure, you reset the original shifter.')
 
