@@ -6,8 +6,8 @@ from . import templates
 
 def doit(arg):
     t = threading.currentThread()
+    print("working on %s" % arg.__name__)
     while getattr(t, "do_run", True):
-        print("working on %s" % arg.__name__)
         arg()
         time.sleep(1)
 
