@@ -1,6 +1,7 @@
 import string
 import os.path
 from datetime import datetime, timedelta
+from pprint import pprint
 
 template_defaults = {
     'fact': {
@@ -63,10 +64,13 @@ def write_data_file(name, **kwargs):
     smartfact_data_path = '/home/factwww/smartfact/data'
     os.makedirs(smartfact_data_path, exist_ok=True)
 
+    kw = {**template_defaults[name], **kwargs}
+    print(name)
+    pprint(kw)
     kw = {
         key: transform(key, value)
         for key, value
-        in {**template_defaults[name], **kwargs}.items()
+        in kw.items()
     }
     tpl = get_template(name)
     sanity_check(name, kw, tpl)
