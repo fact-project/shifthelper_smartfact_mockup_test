@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='shifthelper_smartfact_mockup_test',
-    version='0.1.1',
+    version='0.2.0',
     description='shifthelper_smartfact_mockup_test',
     url='https://github.com/fact-project/shifthelper_smartfact_mockup_test',
     author='Dominik Neise',
@@ -18,4 +18,9 @@ setup(
         'numpy',
     ],
     zip_safe=False,
+    entry_points={
+        'console_scripts': [
+            'SH_test_one_by_one = smartfact_mockup.one_by_one:main',
+        ],
+    }
 )
