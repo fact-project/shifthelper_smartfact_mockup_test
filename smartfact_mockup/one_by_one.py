@@ -12,8 +12,12 @@ def doit(arg):
         time.sleep(1)
 
 
+def just_waiting():
+    return {}
+
 def main():
     checks = [
+        just_waiting,
         # checks_module.test_ShifterOnShift,
         checks_module.test_SmartFactUpToDate,
         checks_module.test_MAGICWeatherUpToDate,
@@ -34,18 +38,17 @@ def main():
         checks_module.test_TriggerRateLowForTenMinutes,
         # checks_module.test_IsUserAwakeBeforeShutdown,
         # checks_module.test_ParkingChecklistFilled,
+        just_waiting,
     ]
 
-    input('Make sure, you are shifter tonight.')
-
+    print('Make sure, you are shifter tonight.')
     for check in checks:
         t = threading.Thread(target=doit, args=(check,))
         t.start()
         input('wait for the call...')
         t.do_run = False
         t.join()
-
-    input('Make sure, you reset the original shifter.')
+    print('Make sure, you reset the original shifter.')
 
 if __name__ == '__main__':
     main()
