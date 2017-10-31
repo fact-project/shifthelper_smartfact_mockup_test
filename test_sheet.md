@@ -17,10 +17,17 @@
 
 ## Test
 
-- [ ] start each test by pressing enter and waiting for:
-   - call,
-   - telegram message and
-   - alert on the SH website
+- [ ] start each test by pressing enter and waiting for **C**all, **T**elegram, **A**lert on the website:
+   - [ ] SmartFactUpToDate
+   - [ ] MAGICWeatherUpToDate
+   - [ ] MainJsStatusCheck
+   - [ ] WindSpeedCheck
+   - [ ] WindGustCheck
+   - [ ] MedianCurrentCheck
+   - [ ] MaximumCurrentCheck
+   - [ ] RelativeCameraTemperatureCheck
+   - [ ] BiasNotOperatingDuringDataRun
+   
 - [ ] go through the list of tests, until you reach the "trigger rate low for 10 minutes" test.
 - [ ] wait 10 minutes .. then expect the alert.
 - [ ] do not acknowledge the alert but wait for the fallback (your landline) to be called.
