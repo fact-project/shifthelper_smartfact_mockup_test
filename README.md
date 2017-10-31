@@ -61,7 +61,56 @@ We want to make sure a human is really allerted in all cases [where human attent
 | ParkingChecklistFilled         | after 10min  | 120         | only **outside** shift         |
 
 
+# How to conduct this test
 
+Before conducting this test, you need to set yourself as todays shifter and SH-fallback. If you want to make sure to distinguish the shifter-call from the fallback-call, you have to use a different phone number for the fallback, say your mobile and your office number.
+
+Then you need to schedule a "Startup" in the [observation schedule] for "right now". The shifthelper updates its view of the schedule about every 5 minutes. So after some time the SH will realize that there is a shift right now. It will call you, to inform you, that there is a shift right now but main.js is not running, this is the time for you to start with the tests.
+
+In order to inject fake input into the SH, you need to install this repo on the FACT La Palma site and execute the main test script on the machine called gate. It will create certain text-files in certain folders, that will alter the information shown on [smartfact]. You should switch off the FACT++ program smartfact, so it does not interfere with these tests.
+
+After starting the main test script of this project it will inject information smartfact, which will trigger the SH to think certain errors happened on La Palma. Your job is to observe the SH and see if it does indeed trigger and emit a call and show the error on the website. In order to test if the SH is really calling the fallback shifter after the right amount of time, you can simply not acknowledge the alert on the website and wait until the fallback shifter is called. You do not have to do this foe every test case, since the code for doing this exists only once in the SH. There is no reason to assume it works for strong-winds but not for mainjs-not-running. But you can test it for two consecutive test cases in order to see if the SH keeps calling the fallback when it called the fallback once, or not.
+
+The main test script keeps one fake situation up as long as you like, while faking all other values to be "normal". When you press Enter, the next fake situation is faked and you should expect another Alter to pop up on the SH website.
+
+If something goes wrong with your tests and you have to start over, keep in mind that you might have Acknowledged a certain kind of Alerts already, so the SH will not emit calls for these kinds of Alerts for 10 minutes. So either wait this time before starting over, or keep in mind what you have alread tests and know what to expect. Even when the SH is not emitting calls and not displaying new alerts on the website, it does still emit telegram messages under these circumstances as a gentle reminder to the shifter that a certain condition is still met, even though it was acknowledged earlier. So know what to expect.
+
+Then simply step through each test case one by one and wait for the call to arrive.
+
+There are 3 tests, which I can not easily create fake input for, without touching many Databases. I would like to avoid touching to many databases during these tests, since we are testing on the production system and can potentially break stuff.
+
+ 1. [ShifterOnShift](https://github.com/fact-project/shifthelper/blob/master/shifthelper/__main__.py#L90)
+ 2. [IsUserAwakeBeforeShutdown](https://github.com/fact-project/shifthelper/blob/master/shifthelper/__main__.py#L217)
+ 3. [ParkingChecklistFilled](https://github.com/fact-project/shifthelper/blob/master/shifthelper/__main__.py#L226)
+
+The first "ShifterOnShift" can be simply tests by not entering yourself as a shifter, but setting up a "Startup" task for right now in the Schedule. After updating its view of the Schedule the SH will call an SH developer, since there is a shift at the moment and there is no shifter in the shift-schedule. This is actually the first test which can be conducted. Only after this call was sent out, you enter yourself as a shifter and fallback and go on as described above.
+
+The 2nd "IsUserAwakeBeforeShutdown" is simple. After you are done with the main test script, you simply schedule a "Shutdown" task in the observation schedule just not for right now, but for "in 15 minutes". As soon as the SH updates its view on the observation schedule it will realize there is a shutdown in say 12 minutes, it will then check ig somebody has pressed the "IamAwake"-buttone recently and if not, it will call you to wake you up. 
+
+The 3rd "ParkingChecklistFilled" is even simpler, just wait ... 10 minutes after the scheduled "Shutdown" you should have completed the Shutdown checklist. If you do not do that, you should expect a call for this. Then simply complete that checklist and you are done. Completing this checklist during daytime is no problem. There is just an additional entry in our checklist DB then, basically telling us, that somebody checked that the telescope is still parked. 
+
+After you are done, you need to tidy up after yourself. It is important to do these things:
+
+ * Restore the original shifter for tonight.
+ * Restore the original fallback shifter for tonight.
+ * Switch the FACT++ program on gate back on.
+ * (Remove the test tasks "Startup" and "Shutdown" from the DB Table "Schedule" - TBR)
+
+-----
+
+## How to remove the test entries from the DB Table "Schedule"
+
+Use the correct user, which has write access.
+
+Perform this query to get a overview:
+
+    SELECT 
+    fScheduleID, fStart, fLastUpdate, fUser, fSourceKey, fMeasurementTypeName 
+    FROM Schedule 
+    JOIN MeasurementType 
+    USING (fMeasurementTypeKey) 
+    ORDER BY fScheduleID DESC 
+    LIMIT 30;
 
 
 
