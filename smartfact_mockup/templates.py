@@ -68,11 +68,10 @@ def write_data_file(stuff):
     os.makedirs(smartfact_data_path, exist_ok=True)
 
     for name in template_defaults:
-        stuff = {**template_defaults[name], stuff.get(name, {})}
         kw = {
             key: transform(key, value)
             for key, value
-            in stuff.items()
+            in {**template_defaults[name], **stuff.get(name, {})}.items()
         }
         tpl = get_template(name)
         sanity_check(name, kw, tpl)
