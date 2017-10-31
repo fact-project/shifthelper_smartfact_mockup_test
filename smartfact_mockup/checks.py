@@ -122,4 +122,5 @@ def test_NoDimCtrlServerAvailable():
 
 def test_TriggerRateLowForTenMinutes():
     all_good()
+    write_data_file('status', mcp='TakingData')
     write_data_file('trigger', trigger_rate=0)
