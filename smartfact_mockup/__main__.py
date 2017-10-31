@@ -8,12 +8,13 @@ def doit(arg):
     t = threading.currentThread()
     print("working on %s" % arg.__name__)
     while getattr(t, "do_run", True):
-        arg()
+        templates.write_data_file(arg())
         time.sleep(1)
 
 
 def main():
     checks = [
+        # checks_module.test_ShifterOnShift,
         checks_module.test_SmartFactUpToDate,
         checks_module.test_MAGICWeatherUpToDate,
         checks_module.test_MainJsStatusCheck,
@@ -31,7 +32,6 @@ def main():
         checks_module.test_DIMNetworkNotAvailable,
         checks_module.test_NoDimCtrlServerAvailable,
         checks_module.test_TriggerRateLowForTenMinutes,
-        # checks_module.test_ShifterOnShift,
         # checks_module.test_IsUserAwakeBeforeShutdown,
         # checks_module.test_ParkingChecklistFilled,
     ]
@@ -39,7 +39,6 @@ def main():
     input('Make sure, you are shifter tonight.')
 
     for check in checks:
-        print('executing:', check.__name__)
         t = threading.Thread(target=doit, args=(check,))
         t.start()
         input('wait for the call...')

@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='shifthelper_smartfact_mockup_test',
-    version='0.1.0',
+    version='0.1.1',
     description='shifthelper_smartfact_mockup_test',
     url='https://github.com/fact-project/shifthelper_smartfact_mockup_test',
     author='Dominik Neise',

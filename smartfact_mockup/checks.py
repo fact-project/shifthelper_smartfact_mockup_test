@@ -1,126 +1,85 @@
 from .templates import write_data_file
 
 
-def all_good():
-    write_data_file('fact')
-    write_data_file('status')
-    write_data_file('weather')
-    write_data_file('pointing')
-    write_data_file('current')
-    write_data_file('temperature')
-    write_data_file('voltage')
-    write_data_file('trigger')
-
-
 def test_SmartFactUpToDate():
-    all_good()
-    write_data_file(
-        'fact',
-        timestamp_1=11,
-        timestamp_2=11,
-    )
+    return {'fact': {'timestamp_1': 11, 'timestamp_2': 11}}
 
 
 def test_MAGICWeatherUpToDate():
-    all_good()
-    write_data_file(
-        'weather',
-        timestamp=11,
-    )
+    return{'weather': {'timestamp': 11}}
 
 
 def test_MainJsStatusCheck():
-    all_good()
-    write_data_file('status', dim_control='Anything')
+    return{'status': {'dim_control': 'Anything'}}
 
 
 def test_WindSpeedCheck():
-    all_good()
-    write_data_file('weather', wind_speed=60)
-    write_data_file('pointing', az=10, zd=45)  # not parked
+    return {
+        'weather': {'wind_speed': 60},
+        'pointing': {'az': 10, 'zd': 45}  # not parked
+    }
 
 
 def test_WindGustCheck():
-    all_good()
-    write_data_file('weather', wind_gusts=60)
-    write_data_file('pointing', az=10, zd=45)  # not parked
+    return {
+        'weather': {'wind_gusts': 60},
+        'pointing': {'az': 10, 'zd': 45}  # not parked
+    }
 
 
 def test_MedianCurrentCheck():
-    all_good()
-    write_data_file('current', calibrated='yes', median_per_sipm=116)
+    return {'current': {'calibrated': 'yes', 'median_per_sipm': 116}}
 
 
 def test_MaximumCurrentCheck():
-    all_good()
-    write_data_file('current', calibrated='yes', max_per_sipm=170)
+    return {'current': {'calibrated': 'yes', 'max_per_sipm': 170}}
 
 
 def test_RelativeCameraTemperatureCheck():
-    all_good()
-    write_data_file('fact', relative_camera_temperature=16.0)
+    return {'fact': {'relative_camera_temperature': 16.0}}
 
 
 def test_BiasNotOperatingDuringDataRun():
-    all_good()
-    # data run
-    write_data_file('fact', system_status='Foo [data]')
-    # Bias not operating
-    write_data_file(
-        'status',
-        bias_control='Disconnected',  # Bias not operating
-        mcp='TakingData',  # is taking data
-    )
+    return {
+        'fact': {'system_status': 'Foo [data]'},
+        'status': {'bias_control': 'Disconnected', 'mcp': 'TakingData'}
+    }
 
 
 def test_BiasChannelsInOverCurrent():
-    all_good()
-    write_data_file('status', bias_control='OverCurrent')
+    return {'status': {'bias_control': 'OverCurrent'}}
 
 
 def test_BiasVoltageNotAtReference():
-    all_good()
-    write_data_file('status', bias_control='NotReferenced')
+    return {'status': {'bias_control': 'NotReferenced'}}
 
 
 def test_ContainerTooWarm():
-    all_good()
-    write_data_file('temperature', current=43)
+    return {'temperature': {'current': 43}}
 
 
 def test_DriveInErrorDuringDataRun():
-    all_good()
-    # data run
-    write_data_file('fact', system_status='Foo [data]')
-    write_data_file(
-        'status',
-        drive_control='PositioningFailed',  # Drive in Error
-        mcp='TakingData',  # data taking
-    )
+    return {
+        'fact': {'system_status': 'Foo [data]'},
+        'status': {'drive_control': 'PositioningFailed', 'mcp': 'TakingData'}
+    }
 
 
 def test_BiasVoltageOnButNotCalibrated():
-    all_good()
-    # voltage on
-    write_data_file('voltage', median=4)
-    write_data_file(
-        'status',
-        bias_control='VoltageOn',
-        feedback='Disconnected',     # feedback not calibrated
-    )
+    return {
+        'voltage': {'median': 4},
+        'status': {'bias_control': 'VoltageOn', 'feedback': 'Disconnected'},
+    }
 
 
 def test_DIMNetworkNotAvailable():
-    all_good()
-    write_data_file('status', dim='Offline')
+    return {'status': {'dim': 'Offline'}}
 
 
 def test_NoDimCtrlServerAvailable():
-    all_good()
-    write_data_file('status', dim_control='Offline')
+    return {'status': {'dim_control': 'Offline'}}
 
 
 def test_TriggerRateLowForTenMinutes():
-    all_good()
-    write_data_file('status', mcp='TakingData')
-    write_data_file('trigger', trigger_rate=0)
+    return {'status': {'mcp': 'TakingData'},
+            'trigger': {'trigger_rate': 0}}

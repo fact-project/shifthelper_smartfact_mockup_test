@@ -63,27 +63,29 @@ def string_field_names(s):
     return list(field_names)
 
 
-def write_data_file(name, **kwargs):
+def write_data_file(stuff):
     smartfact_data_path = '/home/factwww/smartfact/data'
     os.makedirs(smartfact_data_path, exist_ok=True)
 
-    kw = {
-        key: transform(key, value)
-        for key, value
-        in {**template_defaults[name], **kwargs}.items()
-    }
-    tpl = get_template(name)
-    sanity_check(name, kw, tpl)
+    for name in template_defaults:
+        stuff = {**template_defaults[name], stuff.get(name, {})}
+        kw = {
+            key: transform(key, value)
+            for key, value
+            in stuff.items()
+        }
+        tpl = get_template(name)
+        sanity_check(name, kw, tpl)
 
-    try:
-        mockup_data = tpl.format(**kw)
-    except KeyError:
-        print('field_names in template:', string_field_names(tpl))
-        print('kw:', kw)
-        raise
-    out_path = os.path.join(smartfact_data_path, name+'.data')
-    with open(out_path, 'w') as out_file:
-        out_file.write(mockup_data)
+        try:
+            mockup_data = tpl.format(**kw)
+        except KeyError:
+            print('field_names in template:', string_field_names(tpl))
+            print('kw:', kw)
+            raise
+        out_path = os.path.join(smartfact_data_path, name+'.data')
+        with open(out_path, 'w') as out_file:
+            out_file.write(mockup_data)
 
 
 def transform(key, value):
