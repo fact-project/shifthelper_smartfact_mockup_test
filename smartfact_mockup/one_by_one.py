@@ -15,6 +15,7 @@ def doit(arg):
 def just_waiting():
     return {}
 
+
 def main():
     checks = [
         just_waiting,
