@@ -1,10 +1,17 @@
 # Test Sheet
 
+The following credentials are needed to conduct this test:
+
+- **fact@gate**: in order to start and stop `smartfact`
+- **cloudadmin@infra-1**: in order to start and stop the shifthelper and edit the config file
+
+
 ## Setup
-- [ ] Make sure you are fallback shifter (your office phone)
-- [ ] Make sure you are SH expert (your mobile phone)
+- [ ] Make sure you are fallback shifter (office phone A)
+- [ ] Make sure you are SH expert (office phone B)
 - [ ] Prepare your logbook user account for being shifter (add telegram and mobile phone number)
-- [ ] Prepare to switch off the FACT++ program smartfact
+- [ ] Switch off the FACT++ program smartfact
+- [ ] Start the `SH_test_one_by_one` script, it takes over and updates the relevant files, so it looks like we are taking data.
 - [ ] Make sure you have time to conduct this test without being disturbed for 1 or 2 hours.
 - [ ] Remove the current shifter from the [shift scheduler]
 - [ ] Enter a "Startup" task for "right now" in the [observation schedule]
@@ -16,15 +23,24 @@
 
 ## Test
 
-- [ ] Start the `SH_test_one_by_one` script
-- [ ] start each test by pressing enter and waiting for:
-   - call,
-   - telegram message and
-   - alert on the SH website
-- [ ] go through the list of tests, until you reach the "trigger rate low for 10 minutes" test.
-- [ ] at some point to a dummy alert on the website, so this gets tested as well
-- [ ] wait 10 minutes .. then expect the alert.
-- [ ] do not acknowledge the alert but wait for the fallback (your landline) to be called.
+- [ ] start each test by pressing enter and waiting for **C**all, **T**elegram, **A**lert on the website:
+    - [ ] SmartFactUpToDate
+    - [ ] MAGICWeatherUpToDate
+    - [ ] MainJsStatusCheck
+    - [ ] WindSpeedCheck
+    - [ ] WindGustCheck
+    - [ ] MedianCurrentCheck
+    - [ ] MaximumCurrentCheck
+    - [ ] RelativeCameraTemperatureCheck
+    - [ ] BiasNotOperatingDuringDataRun
+    - [ ] BiasChannelsInOverCurrent
+    - [ ] BiasVoltageNotAtReference
+    - [ ] ContainerTooWarm
+    - [ ] DriveInErrorDuringDataRun
+    - [ ] BiasVoltageOnButNotCalibrated
+    - [ ] DIMNetworkNotAvailable
+    - [ ] NoDimCtrlServerAvailable
+    - [ ] TriggerRateLowForTenMinutes ... need to wait 10 minutes
 - [ ] schedule a "Shutdown" Task in the [observation schedule] in 15minutes from now.
 - [ ] wait for the SH to detect that there is a shutdown but nowbody is awake call.
 - [ ] click the I am awake button and acknowledge the alert.
