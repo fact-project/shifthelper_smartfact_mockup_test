@@ -5,7 +5,6 @@ The following credentials are needed to conduct this test:
 - **fact@gate**: in order to start and stop `smartfact`
 - **cloudadmin@infra-1**: in order to start and stop the shifthelper and edit the config file
 
-If want to conduct these tests and have no idea how to get 
 
 ## Setup
 - [ ] Make sure you are fallback shifter (office phone A)
