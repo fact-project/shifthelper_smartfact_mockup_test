@@ -97,6 +97,21 @@ After you are done, you need to tidy up after yourself. It is important to do th
  * (Remove the test tasks "Startup" and "Shutdown" from the DB Table "Schedule" - TBR)
 
 -----
+## SH config
+
+See <https://github.com/fact-project/shifthelper_deployment> for details on how to connect to the SH host in Dortmund. 
+
+In that server, you might have to modify the SH config file for these tests. You'll find that config file here:
+
+    ssh infra-1
+    cd /net/nas/DATA/FACT/shifthelper/config
+    vi config.json
+
+json does now know comments, so in order to "comment something out", 
+just use a key name which is not used. So to 
+comment the current "developer" out, just rename the key to "not_a_developer".
+
+
 
 ## How to remove the test entries from the DB Table "Schedule"
 
